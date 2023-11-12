@@ -114,9 +114,6 @@ rightArrow.addEventListener("click", function (event) {
 
 	updateDots(currentIndex);
 
-
-
-	//retour premiere slide
 	
 });
 
