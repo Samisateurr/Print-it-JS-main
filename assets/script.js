@@ -47,6 +47,9 @@ leftArrow.addEventListener("click", function (event) {
 	//test
 	let currentDotid = "dot" + currentIndex;
 	currentIndex = currentIndex - 1;
+	if (currentIndex < 0) {
+        currentIndex = slides.length - 1;
+    }
 
 	let imageName = slides[currentIndex].image
 
@@ -66,9 +69,7 @@ leftArrow.addEventListener("click", function (event) {
 				dot.classList.add("dot_selected");
 			}
 			// retour a la premiere slide
-			if (currentIndex === 3) {
-				currentIndex = 0 - 1;
-			}
+		
 		});
 	}
 
