@@ -47,9 +47,8 @@ leftArrow.addEventListener("click", function (event) {
 	//test
 	let currentDotid = "dot" + currentIndex;
 	currentIndex = currentIndex - 1;
-	if (currentIndex < 0) {
-        currentIndex = slides.length - 1;
-    }
+	if (currentIndex < 0) {currentIndex = slides.length - 1;}
+	console.log(currentIndex)
 
 	let imageName = slides[currentIndex].image
 
@@ -68,8 +67,7 @@ leftArrow.addEventListener("click", function (event) {
 			if (i === index) {
 				dot.classList.add("dot_selected");
 			}
-			// retour a la premiere slide
-		
+
 		});
 	}
 
@@ -108,14 +106,14 @@ rightArrow.addEventListener("click", function (event) {
 			if (i === index) {
 				dot.classList.add("dot_selected");
 			}
-			// retour a la premiere slide
-			
+		
+
 		});
 	}
 
 	updateDots(currentIndex);
 
-	
+
 });
 
 
