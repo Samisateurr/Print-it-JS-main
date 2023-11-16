@@ -22,7 +22,7 @@ const slides = [
 
 let currentIndex = 0;
 
-
+const dotContainer = document.getElementById("dotContainer");
 let leftArrow = document.getElementById("leftArrow");
 let rightArrow = document.getElementById("rightArrow");
 
@@ -36,11 +36,46 @@ const dotList = document.querySelectorAll(".dot");
 // Source des images
 let srcImage = "./assets/images/slideshow/";
 
+// Pour definir la fonction updateSlide
+function updateSlide(index) {
+    let imageName = slides[index].image;
+    let imagePath = srcImage + imageName;
+    slide.src = imagePath;
+
+    let tagName = slides[index].tagLine;
+    text.innerHTML = tagName;
+}
+
+// Ajouter les points dynamiquement
+function createDots() {
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+		if (i === 0) {
+            dot.classList.add("dot_selected"); // Ajouter la classe active au premier point
+        }
+        dotContainer.appendChild(dot);
+        dot.addEventListener("click", () => {
+            currentIndex = i;
+            updateSlide(currentIndex);
+        });
+    }
+}
+
+// Changement de class pour le Dot actif
+function updateDots(index) {
+    dotList.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.add("dot_selected");
+        } else {
+            dot.classList.remove("dot_selected");
+        }
+    });
+}
+
 
 
 // EventListener pour les fleches
-
-
 leftArrow.addEventListener("click", function (event) {
 	console.log("Vous avez cliqué sur la fleche de gauche")
 	console.log(slides[0].image)
@@ -61,20 +96,9 @@ leftArrow.addEventListener("click", function (event) {
 
 	text.innerHTML = tagName
 
-	function updateDots(index) {
-		dotList.forEach((dot, i) => {
-			dot.classList.remove("dot_selected");
-			if (i === index) {
-				dot.classList.add("dot_selected");
-			}
-
-		});
-	}
-
 	updateDots(currentIndex);
 
-
-
+	
 });
 
 
@@ -99,47 +123,19 @@ rightArrow.addEventListener("click", function (event) {
 	console.log(tagName)
 	//changer txt
 	text.innerHTML = tagName
-	//changer bullet point
-	function updateDots(index) {
-		dotList.forEach((dot, i) => {
-			dot.classList.remove("dot_selected");
-			if (i === index) {
-				dot.classList.add("dot_selected");
-			}
-		
-
-		});
-	}
 
 	updateDots(currentIndex);
-
-
+	
 });
 
+// Initial load
+createDots();
+updateSlide(currentIndex);
+updateDots(currentIndex);
 
 
 
-// EventListener pour les bullet points
 
-
-dot0.addEventListener("click", function (event) {
-	console.log("Vous avez cliqué sur le premier bullet point (img 1)")
-});
-
-
-dot1.addEventListener("click", function (event) {
-	console.log("Vous avez cliqué sur le deuxieme bullet point (img 2)")
-});
-
-
-dot2.addEventListener("click", function (event) {
-	console.log("Vous avez cliqué sur le troisieme bullet point (img 3)")
-});
-
-
-dot3.addEventListener("click", function (event) {
-	console.log("Vous avez cliqué sur le quatrieme bullet point (img 4)")
-});
 
 
 
