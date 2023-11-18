@@ -22,7 +22,7 @@ const slides = [
 
 let currentIndex = 0;
 
-const dotContainer = document.getElementById("dotContainer");
+let dotContainer = document.getElementById("dotContainer");
 let leftArrow = document.getElementById("leftArrow");
 let rightArrow = document.getElementById("rightArrow");
 
@@ -31,48 +31,45 @@ let text = document.querySelector(".banner-txt");
 
 
 // Rassemble les dots dans une meme liste
-const dotList = document.querySelectorAll(".dot");
+let dotList = []; // Initialize dotList as an array
 
 // Source des images
 let srcImage = "./assets/images/slideshow/";
 
 // Pour definir la fonction updateSlide
 function updateSlide(index) {
-    let imageName = slides[index].image;
-    let imagePath = srcImage + imageName;
-    slide.src = imagePath;
+	let imageName = slides[index].image;
+	let imagePath = srcImage + imageName;
+	slide.src = imagePath;
 
-    let tagName = slides[index].tagLine;
-    text.innerHTML = tagName;
+	let tagName = slides[index].tagLine;
+	text.innerHTML = tagName;
 }
 
 // Ajouter les points dynamiquement
 function createDots() {
-    for (let i = 0; i < slides.length; i++) {
-        const dot = document.createElement("span");
-        dot.classList.add("dot");
+	for (let i = 0; i < slides.length; i++) {
+		const dot = document.createElement("span");
+		dot.classList.add("dot");
 		if (i === 0) {
-            dot.classList.add("dot_selected"); // Ajouter la classe active au premier point
-        }
-        dotContainer.appendChild(dot);
-        dot.addEventListener("click", () => {
-            currentIndex = i;
-            updateSlide(currentIndex);
-        });
-    }
+			dot.classList.add("dot_selected"); // Ajouter la classe active au premier point
+		}
+		dotContainer.appendChild(dot);
+		dotList.push(dot); // Add each dot to the dotList array
+		dot.addEventListener("click", () => {
+			currentIndex = i;
+			updateSlide(currentIndex);
+			updateDots(currentIndex);
+		});
+	}
 }
 
-// Changement de class pour le Dot actif
+
 function updateDots(index) {
-    dotList.forEach((dot, i) => {
-        if (i === index) {
-            dot.classList.add("dot_selected");
-        } else {
-            dot.classList.remove("dot_selected");
-        }
-    });
+	dotList.forEach((dot, i) => {
+		dot.classList.toggle("dot_selected", i === index);
+	});
 }
-
 
 
 // EventListener pour les fleches
@@ -82,7 +79,7 @@ leftArrow.addEventListener("click", function (event) {
 	//test
 	let currentDotid = "dot" + currentIndex;
 	currentIndex = currentIndex - 1;
-	if (currentIndex < 0) {currentIndex = slides.length - 1;}
+	if (currentIndex < 0) { currentIndex = slides.length - 1; }
 	console.log(currentIndex)
 
 	let imageName = slides[currentIndex].image
@@ -96,9 +93,22 @@ leftArrow.addEventListener("click", function (event) {
 
 	text.innerHTML = tagName
 
-	updateDots(currentIndex);
+	function updateDots(index) {
+		dotList.forEach((dot, i) => {
+			dot.classList.remove("dot_selected");
+			if (i === index) {
+				dot.classList.add("dot_selected");
+			}
 
-	
+		});
+	}
+
+	updateSlide(currentIndex);
+	updateDots(currentIndex);
+	console.log(updateSlide)
+	console.log(updateDots)
+
+
 });
 
 
@@ -124,8 +134,20 @@ rightArrow.addEventListener("click", function (event) {
 	//changer txt
 	text.innerHTML = tagName
 
+	function updateDots(index) {
+		dotList.forEach((dot, i) => {
+			dot.classList.remove("dot_selected");
+			if (i === index) {
+				dot.classList.add("dot_selected");
+			}
+
+		});
+	}
+
+	updateSlide(currentIndex);
 	updateDots(currentIndex);
-	
+	console.log(dotList)
+
 });
 
 // Initial load
