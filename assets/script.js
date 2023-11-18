@@ -1,4 +1,4 @@
-//Tableau contenant les img et le txt
+//Tableau contenant les img et le txt du carousel
 
 const slides = [
 	{
@@ -33,17 +33,22 @@ let text = document.querySelector(".banner-txt");
 
 
 // Creation d'une liste pour les dots
-let dotList = []; 
+let dotList = [];
 
 // Source des images
 let srcImage = "./assets/images/slideshow/";
 
-// Pour definir la fonction updateSlide
+// Pour definir la fonction updateSlide 
 function updateSlide(index) {
+	//recuperer nom img
 	let imageName = slides[index].image;
+	//construire chemin img
 	let imagePath = srcImage + imageName;
+	//changer source img
 	slide.src = imagePath;
+	//recuperer txt
 	let tagName = slides[index].tagLine;
+	//changer txt
 	text.innerHTML = tagName;
 }
 
@@ -55,14 +60,14 @@ function createDots() {
 		if (i === 0) {
 			dot.classList.add("dot_selected"); // Ajoute la classe active au premier point
 		}
-		dotContainer.appendChild(dot);
+		dotContainer.appendChild(dot); //Ajoute l'element enfant dot au conteneur
 		dotList.push(dot); // Ajoute chaque dots dans la liste de dots
 
-	// Pour rendre les dots cliquable	
+		// Pour rendre les dots cliquable	
 		dot.addEventListener("click", () => {
 			currentIndex = i;
-			updateSlide(currentIndex);
-			updateDots(currentIndex);
+			updateSlide(currentIndex); // Mise a jour img + txt
+			updateDots(currentIndex); // Mise a jour du dot actif
 		});
 	}
 }
@@ -85,20 +90,9 @@ leftArrow.addEventListener("click", function (event) {
 	console.log(slides[0].image)
 	//test console log
 
-	currentIndex = currentIndex - 1;
+	currentIndex = currentIndex - 1; // au clic on retourne a la slide precedente 
 	if (currentIndex < 0) { currentIndex = slides.length - 1; }
 	console.log(currentIndex)
-
-	let imageName = slides[currentIndex].image
-
-	let imagePath = "./assets/images/slideshow/" + imageName;
-
-	slide.src = imagePath;
-
-	let tagName = slides[currentIndex].tagLine
-	console.log(tagName)
-
-	text.innerHTML = tagName
 
 
 	updateSlide(currentIndex);
@@ -114,25 +108,14 @@ rightArrow.addEventListener("click", function (event) {
 	console.log("Vous avez cliqué sur la fleche de droite");
 	//incrementer index
 	currentIndex = currentIndex + 1;
+	//defilement infini
 	if (currentIndex >= slides.length) { currentIndex = 0 }
 	console.log(currentIndex)
-	//recuperer nom img
-	let imageName = slides[currentIndex].image
-	console.log(imageName)
-	//construire chemin img
-	let imagePath = "./assets/images/slideshow/" + imageName;
-	console.log(imagePath)
-	//changer source img
-	slide.src = imagePath;
-	//recuperer txt
-	let tagName = slides[currentIndex].tagLine
-	console.log(tagName)
-	//changer txt
-	text.innerHTML = tagName
 
- // Mise a jour de l'img et du txt 
+
+	// Mise a jour de l'img et du txt 
 	updateSlide(currentIndex);
- // Mise a jour du dot actif	
+	// Mise a jour du dot actif	
 	updateDots(currentIndex);
 
 	console.log(dotList)
