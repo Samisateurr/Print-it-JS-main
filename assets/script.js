@@ -1,4 +1,4 @@
-
+//Tableau contenant les img et le txt
 
 const slides = [
 	{
@@ -20,6 +20,8 @@ const slides = [
 
 ];
 
+// Variables 
+
 let currentIndex = 0;
 
 let dotContainer = document.getElementById("dotContainer");
@@ -30,8 +32,8 @@ let slide = document.querySelector(".banner-img");
 let text = document.querySelector(".banner-txt");
 
 
-// Rassemble les dots dans une meme liste
-let dotList = []; // Initialize dotList as an array
+// Creation d'une liste pour les dots
+let dotList = []; 
 
 // Source des images
 let srcImage = "./assets/images/slideshow/";
@@ -41,21 +43,22 @@ function updateSlide(index) {
 	let imageName = slides[index].image;
 	let imagePath = srcImage + imageName;
 	slide.src = imagePath;
-
 	let tagName = slides[index].tagLine;
 	text.innerHTML = tagName;
 }
 
-// Ajouter les points dynamiquement
+// Ajoute les dots dynamiquement
 function createDots() {
 	for (let i = 0; i < slides.length; i++) {
 		const dot = document.createElement("span");
 		dot.classList.add("dot");
 		if (i === 0) {
-			dot.classList.add("dot_selected"); // Ajouter la classe active au premier point
+			dot.classList.add("dot_selected"); // Ajoute la classe active au premier point
 		}
 		dotContainer.appendChild(dot);
-		dotList.push(dot); // Add each dot to the dotList array
+		dotList.push(dot); // Ajoute chaque dots dans la liste de dots
+
+	// Pour rendre les dots cliquable	
 		dot.addEventListener("click", () => {
 			currentIndex = i;
 			updateSlide(currentIndex);
@@ -64,10 +67,14 @@ function createDots() {
 	}
 }
 
-
+//Changement du dot actif
 function updateDots(index) {
 	dotList.forEach((dot, i) => {
-		dot.classList.toggle("dot_selected", i === index);
+		dot.classList.remove("dot_selected");
+		if (i === index) {
+			dot.classList.add("dot_selected");
+		}
+
 	});
 }
 
@@ -76,8 +83,8 @@ function updateDots(index) {
 leftArrow.addEventListener("click", function (event) {
 	console.log("Vous avez cliqué sur la fleche de gauche")
 	console.log(slides[0].image)
-	//test
-	let currentDotid = "dot" + currentIndex;
+	//test console log
+
 	currentIndex = currentIndex - 1;
 	if (currentIndex < 0) { currentIndex = slides.length - 1; }
 	console.log(currentIndex)
@@ -93,15 +100,6 @@ leftArrow.addEventListener("click", function (event) {
 
 	text.innerHTML = tagName
 
-	function updateDots(index) {
-		dotList.forEach((dot, i) => {
-			dot.classList.remove("dot_selected");
-			if (i === index) {
-				dot.classList.add("dot_selected");
-			}
-
-		});
-	}
 
 	updateSlide(currentIndex);
 	updateDots(currentIndex);
@@ -115,8 +113,6 @@ leftArrow.addEventListener("click", function (event) {
 rightArrow.addEventListener("click", function (event) {
 	console.log("Vous avez cliqué sur la fleche de droite");
 	//incrementer index
-	let currentDotid = "dot" + currentIndex;
-	console.log(currentDotid)
 	currentIndex = currentIndex + 1;
 	if (currentIndex >= slides.length) { currentIndex = 0 }
 	console.log(currentIndex)
@@ -134,23 +130,16 @@ rightArrow.addEventListener("click", function (event) {
 	//changer txt
 	text.innerHTML = tagName
 
-	function updateDots(index) {
-		dotList.forEach((dot, i) => {
-			dot.classList.remove("dot_selected");
-			if (i === index) {
-				dot.classList.add("dot_selected");
-			}
-
-		});
-	}
-
+ // Mise a jour de l'img et du txt 
 	updateSlide(currentIndex);
+ // Mise a jour du dot actif	
 	updateDots(currentIndex);
+
 	console.log(dotList)
 
 });
 
-// Initial load
+// Initialisation du carrousel lors du chargement initial de la page
 createDots();
 updateSlide(currentIndex);
 updateDots(currentIndex);
